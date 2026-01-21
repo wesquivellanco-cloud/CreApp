@@ -173,26 +173,29 @@ select {
 @media (max-width: 600px) {
 
   .main {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
-    row-gap: 20px;
+    flex-direction: row;        /* 🔑 MANTIENE PANEL A LA DERECHA */
+    align-items: flex-start;
+    justify-content: center;
+    gap: 15px;
   }
-   .side-panel {
-    width: 100%;
-    max-width:0px;
-    align-self:right;
-  }
+
   .columns {
-    width: 100%;
-    max-width: 500px;
-    align-self:left;
+    width: 65%;
+    max-width: none;
   }
+
+  .side-panel {
+    width: 35%;
+    max-width: none;
+    align-self: flex-start;
+  }
+
   .reset-btn {
-    width: auto;
     align-self: flex-end;
+    width: auto;
     margin-top: 20px;
   }
+
 }
 </style>
 </head>
@@ -413,6 +416,7 @@ function resetAll(){
 </body>
 
 </html>
+
 
 
 
