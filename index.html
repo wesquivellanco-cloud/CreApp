@@ -199,6 +199,30 @@ select {
 * {
   box-sizing: border-box;
 }
+  @media (max-width: 600px) {
+
+  .main {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    row-gap: 20px;
+  }
+
+  .columns {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .side-panel {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .reset-btn {
+    width: auto;
+    align-self: end;
+  }
+}
 </style>
 </head>
 
@@ -418,6 +442,7 @@ function resetAll(){
 </body>
 
 </html>
+
 
 
 
