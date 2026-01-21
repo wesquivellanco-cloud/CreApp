@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Calculadora Click It</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#0f0f0f;
+  color:#7b8122;
+  margin:0;
+  padding:20px;
+}
+
+h1{
+  text-align:center;
+  margin-bottom:10px;
+}
+
+/* CONTROLES */
+.controls{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:15px;
+}
+
+select, button{
+  padding:8px 14px;
+  border-radius:8px;
+  border:none;
+  font-size:14px;
+}
+
+/* BARRA DE PODER */
+.power-container{
+  max-width:400px;
+  margin:0 auto 15px auto;
+  background:#757474;
+  border-radius:14px;
+  overflow:hidden;
+  height:28px;
+  position:relative;
+}
+
+.power-bar {
+  height:100%;
+  width:0%;
+  transition: width 0.8s ease, background 0.6s ease;
+  border-radius:14px;
+}
+
+.power-text{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  color:#fff;
+  text-shadow:0 0 6px rgba(0,0,0,.8);
+  pointer-events:none;
+}
+
+/* ZONA PRINCIPAL */
+.main{
+  display:flex;
+  justify-content:center;
+  gap:35px;
+}
+
+/* COLUMNAS */
+.columns{
+  display:flex;
+  gap:20px;
+}
+
+.column{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* REFS */
+.user{
+  background:#1e1e1e;
+  padding:12px;
+  border-radius:10px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.user.active{
+  background:#567faf;
+  color:#000;
+  font-weight:bold;
+}
+
+.ref-select{
+  margin-top:6px;
+  width:100%;
+  border-radius:6px;
+  padding:5px;
+  font-size:13px;
+}
+
+/* PANEL DERECHO */
+.side-panel{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.info-box div:nth-child(2){
+  color:#a9e6c2;
+  font-weight:bold;
+  font-size:16px;
+}
+.info-box div:nth-child(3){
+  color:#fff;
+  font-weight:bold;
+  font-size:14px;
+}
+
+.info-title{
+  font-size:13px;
+  color:#4597c7;
+  margin-bottom:4px;
+}
+
+.reset-btn{
+  margin-top:30px;
+  background:#df1010;
+  color:#fff;
+  opacity:.85;
+}
+.reset-btn:hover{ opacity:1; }
+
+/* VOLUMEN */
+.volume-box{
+  background:#1a1a1a;
+  padding:6px;
+  border-radius:10px;
+  text-align:center;
+}
+
+.volume-box strong{
+  font-size:12px;
+  color:#853785;
+}
+
+.volume-bar-container{
+  width:100%;
+  height:8px;
+  background:#333;
+  border-radius:6px;
+  overflow:hidden;
+  margin-top:6px;
+}
+
+.volume-bar{
+  height:100%;
+  width:0%;
+  transition: width 0.8s ease, background 0.6s ease;
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .main{
+    flex-direction:column;
+    align-items:center;
+  }
+  .columns,.side-panel{
+    max-width:400px;
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<h1>Calculadora Click It</h1>
+
+<div class="power-container">
+  <div id="powerBar" class="power-bar"></div>
+  <div id="powerText" class="power-text">0%</div>
+</div>
+
+<div class="controls">
+  <select id="inversion">
+    <option value="">Inversión</option>
+    <option value="50">$50</option>
+    <option value="150">$150</option>
+    <option value="250">$250</option>
+    <option value="500">$500</option>
+    <option value="1000">$1000</option>
+    <option value="2500">$2500</option>
+    <option value="5000">$5000</option>
+    <option value="10000">$10000</option>
+  </select>
+
+  <select id="plazo"></select>
+
+  <select id="binarioSelect" disabled>
+    <option>Binario 0%</option>
+  </select>
+</div>
+
+<div class="main">
+
+  <div class="columns">
+
+    <div class="column">
+      <div id="left"></div>
+      <div class="volume-box">
+        <strong>Volumen Izq</strong>
+        <div id="leftVolume">$0</div>
+        <div class="volume-bar-container">
+          <div id="leftVolumeBar" class="volume-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div id="right"></div>
+      <div class="volume-box">
+        <strong>Volumen Der</strong>
+        <div id="rightVolume">$0</div>
+        <div class="volume-bar-container">
+          <div id="rightVolumeBar" class="volume-bar"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="side-panel">
+    <div class="info-box">
+      <div class="info-title">Click Diario</div>
+      <div id="clickPct">0.00%</div>
+      <div id="clickUsd">$0.00</div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-title">Bono Directo</div>
+      <div id="directoPct">0.00%</div>
+      <div id="directoUsd">$0.00</div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-title">Bono Binario</div>
+      <div id="binarioPct">0.00%</div>
+      <div id="binarioUsd">$0.00</div>
+    </div>
+
+    <button class="reset-btn" onclick="resetAll()">Reset</button>
+  </div>
+
+</div>
+
+<script>
+const state={
+  inversion:0,
+  plazo:0,
+  binario:0,
+  binarioActivo:false,
+  users:{left:[],right:[]}
+};
+
+const powerBar=document.getElementById('powerBar');
+const powerText=document.getElementById('powerText');
+const inversion=document.getElementById('inversion');
+const plazo=document.getElementById('plazo');
+const binarioSelect=document.getElementById('binarioSelect');
+
+[0,1,5,10,30,60,90,120,150,180,233].forEach(d=>{
+  const o=document.createElement('option');
+  o.value=d;
+  o.textContent=`Plazo ${d} días`;
+  plazo.appendChild(o);
+});
+
+const refMontos=[50,150,250,500,1000,2500,5000,10000];
+
+['left','right'].forEach(side=>{
+  const col=document.getElementById(side);
+  for(let i=0;i<5;i++){
+    const d=document.createElement('div');
+    d.className='user';
+    d.textContent=`Ref. ${i+1}`;
+    d.onclick=()=>toggleRef(side,i,d);
+    col.appendChild(d);
+  }
+});
+
+inversion.onchange=()=>{
+  state.inversion=+inversion.value||0;
+  actualizarBinario();
+};
+plazo.onchange=()=>{
+  state.plazo=+plazo.value||0;
+  recalc();
+};
+
+function actualizarBinario(){
+  state.binario=
+    [50,150].includes(state.inversion)?7:
+    [250,500].includes(state.inversion)?8:
+    [1000,2500].includes(state.inversion)?9:
+    [5000,10000].includes(state.inversion)?10:0;
+  binarioSelect.innerHTML=`<option>Binario ${state.binario}%</option>`;
+  recalc();
+}
+
+function toggleRef(side,i,el){
+  if(el.classList.contains('active')||el.querySelector('select')) return;
+  if(i>0&&!state.users[side][i-1]) return;
+
+  const sel=document.createElement('select');
+  sel.className='ref-select';
+  sel.innerHTML='<option value="">Monto</option>'+
+    refMontos.map(m=>`<option value="${m}">$${m}</option>`).join('');
+  sel.onmousedown=e=>e.stopPropagation();
+  sel.onchange=()=>{
+    state.users[side][i]=+sel.value;
+    el.classList.add('active');
+    el.innerHTML=`Ref. ${i+1}<br>$${sel.value}`;
+    recalc();
+  };
+  el.appendChild(sel);
+}
+
+function recalc(){
+  if(!state.binarioActivo&&state.users.left[0]&&state.users.right[0]){
+    state.binarioActivo=true;
+  }
+
+  const l=state.users.left.reduce((a,b)=>a+(b||0),0);
+  const r=state.users.right.reduce((a,b)=>a+(b||0),0);
+
+  leftVolume.textContent='$'+l.toFixed(2);
+  rightVolume.textContent='$'+r.toFixed(2);
+
+  const max=Math.max(l,r,1);
+  const lp=l/max*100;
+  const rp=r/max*100;
+
+  const color=p=>p>=90?'#d50000':p>=70?'#ff9100':p>=40?'#ffd600':'#00c853';
+
+  leftVolumeBar.style.width=lp+'%';
+  rightVolumeBar.style.width=rp+'%';
+  leftVolumeBar.style.background=color(lp);
+  rightVolumeBar.style.background=color(rp);
+
+  const bonoDirecto=state.users.left.concat(state.users.right)
+    .reduce((a,b)=>a+(b||0)*0.10,0);
+  const bonoBinario=state.binarioActivo?Math.min(l,r)*(state.binario/100):0;
+
+  const pctDiario=state.plazo*0.86;
+  const usdDiario=state.inversion*(pctDiario/100);
+
+  clickPct.textContent=pctDiario.toFixed(2)+'%';
+  clickUsd.textContent='$'+usdDiario.toFixed(2);
+  directoPct.textContent=((bonoDirecto/state.inversion)*100||0).toFixed(2)+'%';
+  directoUsd.textContent='$'+bonoDirecto.toFixed(2);
+  binarioPct.textContent=((bonoBinario/state.inversion)*100||0).toFixed(2)+'%';
+  binarioUsd.textContent='$'+bonoBinario.toFixed(2);
+
+  const total=usdDiario+bonoDirecto+bonoBinario;
+  const pct=(total/(state.inversion*2))*100||0;
+  powerBar.style.width=Math.min(pct,100)+'%';
+  powerText.textContent=pct.toFixed(2)+'% ($'+total.toFixed(2)+')';
+  powerBar.style.background=color(pct);
+}
+
+function resetAll(){
+  state.inversion=0;
+  state.plazo=0;
+  state.binario=0;
+  state.binarioActivo=false;
+  state.users={left:[],right:[]};
+  inversion.value='';
+  plazo.value=0;
+  binarioSelect.innerHTML='<option>Binario 0%</option>';
+  document.querySelectorAll('.user').forEach((u,i)=>{
+    u.classList.remove('active');
+    u.innerHTML=`Ref. ${i%5+1}`;
+  });
+  recalc();
+}
+</script>
+
+</body>
+</html>
