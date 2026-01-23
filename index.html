@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
+/* ===================== BASE ===================== */
 body{
   font-family: Arial, sans-serif;
   background:#0f0f0f;
@@ -19,7 +20,13 @@ h1{
   margin-bottom:10px;
 }
 
-/* CONTROLES */
+select, button{
+  padding:8px 14px;
+  border-radius:8px;
+  border:none;
+  font-size:14px;
+}
+/* ===================== CONTROLES ===================== */
 .controls{
   display:flex;
   justify-content:center;
@@ -27,30 +34,21 @@ h1{
   flex-wrap:wrap;
   margin-bottom:15px;
 }
-
-select, button{
-  padding:8px 14px;
-  border-radius:8px;
-  border:none;
-  font-size:14px;
-}
-
-/* BARRA DE PODER */
+/* ===================== POWER BAR ===================== */
 .power-container{
   max-width:400px;
-  margin:0 auto 15px auto;
+  margin:0 auto 15px;
   background:#757474;
   border-radius:14px;
-  overflow:hidden;
   height:28px;
   position:relative;
+  overflow:hidden;
 }
 
-.power-bar {
+.power-bar{
   height:100%;
   width:0%;
-  transition: width 0.8s ease, background 0.6s ease;
-  border-radius:14px;
+  transition: width .8s, background .6s;
 }
 
 .power-text{
@@ -61,59 +59,92 @@ select, button{
   justify-content:center;
   font-weight:bold;
   color:#fff;
-  text-shadow:0 0 6px rgba(0,0,0,.8);
-  pointer-events:none;
 }
-
-/* ZONA PRINCIPAL */
+/* ===================== LAYOUT GENERAL===================== */
 .main{
   display:flex;
   justify-content:center;
   gap:35px;
 }
 
-/* COLUMNAS */
 .columns{
   display:flex;
-  gap:20px;
+  gap:40px;
 }
 
 .column{
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:20px;
 }
 
-/* REFS */
-.user{
-  background:#1e1e1e;
-  padding:12px;
+/* ===================== REF BASE ===================== */
+.user{  
+  background:#20a2df;
+  padding:15px 10px;
   border-radius:10px;
   text-align:center;
   cursor:pointer;
+  font-size:15px;
+  line-height:1.5;
+  box-shadow:0 0 10px rgba(3, 57, 107, 0.6);
 }
-
 .user.active{
-  background:#567faf;
-  color:#000;
+  background:#02e70e;
+  color:#424242;
   font-weight:bold;
 }
-
-.ref-select{
-  margin-top:6px;
-  width:100%;
-  border-radius:6px;
-  padding:5px;
-  font-size:13px;
+.user.active{
+  padding: 6px 8px;
+  font-size: 18px;
+  line-height: 1.2;
 }
-
-/* PANEL DERECHO */
+.user small{
+  display: block;
+  font-size: 10px;
+  margin-top: 5px;
+  line-height: 1;
+}
+.ref-select{
+  display:block;
+  width:100%;
+  margin-top:4px;
+  padding:3px;
+  font-size:15px;
+  border-radius:10px;
+}
+/* ============================ REF RED ========================== */
+.user.lider-ref{
+  background: linear-gradient(135deg, #59296d, #4a148c);
+  color:#fff;
+  border:2px solid #ce93d8;
+  box-shadow:0 0 6px rgba(206,147,216,.6);
+  padding: 4px 6px !important;
+  line-height: 1.2;
+}
+.user.lider-ref:hover{
+  filter: brightness(1.15);
+}
+.user.lider-ref select{
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+}
+.user.lider-ref small{
+  font-size: 10px;
+  margin-top: 2px;
+}
+/* =============== PANEL DERECHO =============== */
 .side-panel{
   display:flex;
   flex-direction:column;
   gap:12px;
 }
-
+.info-title{
+  font-size:13px;
+  color:#4597c7;
+  margin-bottom:4px;
+}
 .info-box div:nth-child(2){
   color:#a9e6c2;
   font-weight:bold;
@@ -124,34 +155,35 @@ select, button{
   font-weight:bold;
   font-size:14px;
 }
-
-.info-title{
-  font-size:13px;
-  color:#4597c7;
-  margin-bottom:4px;
-}
-
 .reset-btn{
-  margin-top:30px;
+  margin-top:0px;
   background:#812f2f;
   color:#fff;
   opacity:.85;
 }
-.reset-btn:hover{ opacity:1; }
-
-/* VOLUMEN */
+.reset-btn:hover{ 
+  opacity:1; 
+}
+.lider-btn{
+  background: #15425c;
+  color: #e7f0ee;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;  
+  opacity: 0.9;
+}
+/* ===============VOLUMEN BOX =============== */
 .volume-box{
   background:#1a1a1a;
   padding:6px;
   border-radius:10px;
   text-align:center;
 }
-
 .volume-box strong{
   font-size:12px;
   color:#853785;
 }
-
 .volume-bar-container{
   width:100%;
   height:8px;
@@ -160,43 +192,73 @@ select, button{
   overflow:hidden;
   margin-top:6px;
 }
-
 .volume-bar{
   height:100%;
   width:0%;
   transition: width 0.8s ease, background 0.6s ease;
 }
+/* =============== SELECT =============== */
 select {
   max-width: 100%;
 }
-/* RESPONSIVE */
+
+/* ===================== RESPONSIVE ===================== */
 @media (max-width: 600px) {
 
+  /* ===== LAYOUT GENERAL ===== */
   .main {
-    flex-direction: row;        /* 🔑 MANTIENE PANEL A LA DERECHA */
+    flex-direction: row;        /* mantiene panel a la derecha */
     align-items: flex-start;
     justify-content: center;
     gap: 15px;
   }
-
   .columns {
     width: 80%;
     max-width: none;
   }
-
   .side-panel {
     width: 35%;
     max-width: none;
     align-self: flex-start;
   }
-
+  /* ===== BOTONES (RED / RESET) ===== */
+  .lider-btn,
+  .reset-btn {
+    width: 100%;
+    display: block;
+  }
+  .lider-btn {
+    margin-top: 20px;
+  }
+  .lider-btn:hover {
+    opacity: 1;
+  }
   .reset-btn {
     align-self: right;
     width: auto;
-     margin-left: -40px;
+    margin-left: -40px;
   }
-
+  .action-buttons {
+    margin-top: 30px; /* separación del panel derecho */
+  }
+  /* ===== REFS RED (VISUAL) ===== */
+  .user.lider-ref {
+    padding: 6px 8px;
+    font-size: 12px;
+    line-height: 1.2;
+  }
+  /* ajuste final de tamaño (prioridad más baja) */
+  .user.lider-ref {
+    font-size: 9px;
+  }
+  /* ===== SELECT DE MONTO EN REFS RED ===== */
+  .user.lider-ref .ref-select {
+    margin-top: 4px;
+    padding: 3px;
+    font-size: 12px;
+  }
 }
+
 </style>
 </head>
 
@@ -275,20 +337,26 @@ select {
       <div id="binarioPct">0.00%</div>
       <div id="binarioUsd">$0.00</div>
     </div>
-
+    <div class="action-buttons">  </div>
+    <button class="lider-btn" onclick="toggleRed()">Red</button>  
     <button class="reset-btn" onclick="resetAll()">Reset</button>
   </div>
 
 </div>
 
 <script>
+  
 const state={
   inversion:0,
   plazo:0,
   binario:0,
   binarioActivo:false,
   users:{left:[],right:[]}
+  
 };
+// ========================== CONFIGURACIÓN LÍDER =================================//
+const MONTO_LIDER = 0; 
+var liderActivo = false;
 
 const powerBar=document.getElementById('powerBar');
 const powerText=document.getElementById('powerText');
@@ -296,13 +364,17 @@ const inversion=document.getElementById('inversion');
 const plazo=document.getElementById('plazo');
 const binarioSelect=document.getElementById('binarioSelect');
 
+// ========================== CONFIGURACION PLAZO =================================//
 [0,5,12,22,44,66,88,110,154,198,232].forEach(d=>{
   const o=document.createElement('option');
   o.value=d;
   o.textContent=`Plazo ${d} días`;
   plazo.appendChild(o);
 });
-
+plazo.onchange=()=>{
+  state.plazo=+plazo.value||0;
+  recalc();
+};
 const refMontos=[50,150,250,500,1000,2500,5000,10000];
 
 ['left','right'].forEach(side=>{
@@ -315,16 +387,13 @@ const refMontos=[50,150,250,500,1000,2500,5000,10000];
     col.appendChild(d);
   }
 });
-
+// ========================== INVERSION =================================//
 inversion.onchange=()=>{
   state.inversion=+inversion.value||0;
   actualizarBinario();
 };
-plazo.onchange=()=>{
-  state.plazo=+plazo.value||0;
-  recalc();
-};
 
+// ========================== FUNCIONES =================================//
 function actualizarBinario(){
   state.binario=
     [50,150].includes(state.inversion)?7:
@@ -334,9 +403,26 @@ function actualizarBinario(){
   binarioSelect.innerHTML=`<option>Binario ${state.binario}%</option>`;
   recalc();
 }
-
 function toggleRef(side,i,el){
-  if(el.classList.contains('active')||el.querySelector('select')) return;
+   // ========================== REGLAS =================================//
+if (
+  el.classList.contains('active') &&
+  !el.classList.contains('lider-ref')
+) {
+  const col = document.getElementById(side);
+
+  for (let j = i; j < 5; j++) {
+    state.users[side][j] = null;
+
+    const refEl = col.children[j];
+    refEl.classList.remove('active','lider-ref');
+    refEl.innerHTML = `Ref. ${j+1}`;
+  }
+
+  recalc();
+  return;
+}
+  if(el.querySelector('select')) return;
   if(i>0&&!state.users[side][i-1]) return;
 
   const sel=document.createElement('select');
@@ -345,21 +431,99 @@ function toggleRef(side,i,el){
     refMontos.map(m=>`<option value="${m}">$${m}</option>`).join('');
   sel.onmousedown=e=>e.stopPropagation();
   sel.onchange=()=>{
-    state.users[side][i]=+sel.value;
+    state.users[side][i] = {
+  monto: +sel.value,
+  lider: false
+};
     el.classList.add('active');
     el.innerHTML=`Ref. ${i+1}<br>$${sel.value}`;
     recalc();
   };
   el.appendChild(sel);
 }
+function activarLider(){
 
+  if (liderActivo) return;
+  liderActivo = true;
+
+  const refs = document.querySelectorAll('#right .user');
+
+  for(let i = 1; i < 5; i++){
+
+    const el = refs[i];
+
+    // estado inicial Red
+    state.users.right[i] = {
+      monto: MONTO_LIDER,
+      lider: true
+    };
+
+    el.classList.add('active','lider-ref');
+
+    // selector de monto
+    const sel = document.createElement('select');
+    sel.className = 'ref-select';
+    sel.innerHTML =
+      '<option value="">Monto</option>' +
+      refMontos.map(m => `<option value="${m}">$${m}</option>`).join('');
+
+    sel.onmousedown = e => e.stopPropagation();
+
+    sel.onchange = () => {
+      state.users.right[i].monto = +sel.value;
+
+      // 🔑 elimina el select y deja la caja compacta
+      el.innerHTML =
+        `Ref. ${i+1}<br>$${sel.value}`;
+
+      recalc();
+    };
+
+    el.innerHTML = `Ref. ${i+1}`;
+    el.appendChild(sel);
+  }
+
+  recalc(); 
+}
+function desactivarLider(){
+
+  const refs = document.querySelectorAll('#right .user');
+
+  for(let i = 1; i < 5; i++){
+
+    const el = refs[i];
+
+    // limpiar estado
+    state.users.right[i] = null;
+
+    // limpiar visual
+    el.classList.remove('active','lider-ref');
+    el.innerHTML = `Ref. ${i+1}`;
+  }
+
+  liderActivo = false;
+  recalc();
+}
+function toggleRed(){
+  if(liderActivo){
+    desactivarLider();
+  }else{
+    activarLider();
+  }
+}
 function recalc(){
   if(!state.binarioActivo&&state.users.left[0]&&state.users.right[0]){
     state.binarioActivo=true;
   }
 
-  const l=state.users.left.reduce((a,b)=>a+(b||0),0);
-  const r=state.users.right.reduce((a,b)=>a+(b||0),0);
+  const l = state.users.left.reduce((a,ref)=>{
+  if(!ref) return a;
+  return a + (ref.monto ?? ref);
+},0);
+  const r = state.users.right.reduce((a,ref)=>{
+  if(!ref) return a;
+  return a + (ref.monto ?? ref);
+},0);
 
   leftVolume.textContent='$'+l.toFixed(2);
   rightVolume.textContent='$'+r.toFixed(2);
@@ -375,8 +539,13 @@ function recalc(){
   leftVolumeBar.style.background=color(lp);
   rightVolumeBar.style.background=color(rp);
 
-  const bonoDirecto=state.users.left.concat(state.users.right)
-    .reduce((a,b)=>a+(b||0)*0.10,0);
+  const bonoDirecto = state.users.left
+  .concat(state.users.right)
+  .reduce((total, ref) => {
+    if(!ref) return total;
+    if(ref.lider) return total; // ❌ líder no paga directo
+    return total + ref.monto * 0.10;
+  }, 0);
   const bonoBinario=state.binarioActivo?Math.min(l,r)*(state.binario/100):0;
 
   const pctDiario=state.plazo*0.86;
@@ -395,7 +564,6 @@ function recalc(){
   powerText.textContent=pct.toFixed(2)+'% ($'+total.toFixed(2)+')';
   powerBar.style.background=color(pct);
 }
-
 function resetAll(){
   state.inversion=0;
   state.plazo=0;
@@ -406,10 +574,20 @@ function resetAll(){
   plazo.value=0;
   binarioSelect.innerHTML='<option>Binario 0%</option>';
   document.querySelectorAll('.user').forEach((u,i)=>{
-    u.classList.remove('active');
-    u.innerHTML=`Ref. ${i%5+1}`;
+    u.classList.remove('active','lider-ref');
+    u.innerHTML = `Ref. ${i%5+1}`;
   });
+const btn = document.querySelector('.lider-btn');
+btn.textContent = 'Red';
+btn.style.opacity = '1';
+btn.style.cursor = 'pointer';
+
+liderActivo = false;
+document.querySelectorAll('.lider-ref')
+  .forEach(el => el.classList.remove('lider-ref')); 
   recalc();
+  
+  
 }
 </script>
 
